@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Coral+Pixels&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&display=swap" rel="stylesheet">
+  <title>Hero's Potions</title>
+
+  <style>
+    body {
+      background-color: azure;
+      font-family: 'Coral Pixels', serif;
+    }
+
+    .btn-purple {
+      background-color: #6f42c1;
+      color: white;
+      font-family: 'Pixelify Sans', serif;
+    }
+
+    .btn-pink {
+      background-color: #e83e8c;
+      color: white;
+      font-family: 'Pixelify Sans', serif;
+    }
+
+    .search-container {
+      position: relative;
+      flex-grow: 1;
+    }
+
+    .search-input {
+      height: 40px;
+      width: 100%;
+      border-radius: 25px;
+      padding-left: 35px;
+      border: none;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .search-icon {
+      position: absolute;
+      top: 50%;
+      left: 15px;
+      transform: translateY(-50%);
+      color: #888;
+    }
+
+    .content-wrapper {
+      background-color: powderblue;
+      margin-left: 30px;
+      columns: 1;
+      padding: 15px;
+      max-width: 325px;
+      width: 90%;
+      border-radius: 10px;
+    }
+
+    .fixed-cart {
+      position: sticky;
+      top: 80px; 
+      left: 20px;
+      width: 280px; 
+      max-height: 90vh;
+      overflow-y: auto;
+      padding: 1rem;
+      z-index: 999;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      }
+
+    .card-img-top {
+        height: 180px;
+        width: 180px;
+        margin: auto;
+    }
+    .reciept_card{
+      height:100px;
+      background-color: #c49fb0;
+      margin-top:20px;
+      border:solid;
+      border-radius:3px;
+      border-width:3px;
+      border-color: #c49fb0;
+    }
+    .reciept_card h1 {
+      font-size:20px;
+    }
+  </style>
+</head>
+<body>
+  <header class="p-4 mb-4" style="background-color: powderblue;">
+    <div class="container">
+      <h1>Hero's Exclusive Magic Store</h1>
+      <nav class="d-flex align-items-center gap-3">
+        <a href="index.html" class="btn btn-purple btn-sm">Products</a>
+        <a href="about.html" class="btn btn-pink btn-sm">About</a>
+        <div class="search-container">
+          <input type="text" class="form-control search-input" placeholder="Search...">
+          <i class="fas fa-search search-icon"></i>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-md-3">
+        <div class="content-wrapper fixed-cart">
+          <h3 class="text-center">Online Details & Product Receipt</h3>
+          
+          <form action="http://47.129.9.35/cs3/checkout.php" method="post">
+            <ul id="cart-items" class="list-group mb-3"></ul>
+            <p><strong>Total:</strong> $<span id="Total">0</span></p>
+            <div class="mb-3">
+              <input type="text" id="cust_name" class="form-control" placeholder="Name"  name = "cust_name" required>
+            </div>
+            <div class="mb-3">
+              <input type="text" id="cust_addr" class="form-control" placeholder="Address" name = "cust_addr" required>
+            </div>
+            <div class="mb-3">
+              <input type="email" id="cust_email" class="form-control" placeholder="Email" name = "cust_email" required>
+            </div>
+              <input type = "hidden" id = "cust_order" name = "cust_order">
+            <button type="submit" class="btn btn-pink w-100" onclick="set_order()">Checkout</button>
+          </form>
+            <div id = "b"></div>
+        </div>
+      </div>
+  
+      <div class="col-md-9">
+
+        <h2>Healing Elixers</h2>
+        <div class="row">
+          <div class="col-md-4 mb-4">
+            <div class="card">
+              <img src="media/heal1.png" class="card-img-top" alt="elixer">
+              <div class="card-body">
+                <h5 class="card-title">R for SALE: On the Ground</h5>
+                <p class="card-text">Heals wounds and light bruises in 2 minutes.</p>
+                <p class="card-text">$10 per 20 mL.</p>
+                <a onclick = "add(0)" class="btn btn-purple w-100">Add to Cart</a>
+              </div>
+            </div>
+          </div>
+  
+          <div class="col-md-4 mb-4">
+            <div class="card">
+              <img src="media/heal2.png" class="card-img-top" alt="elixer">
+              <div class="card-body">
+                <h5 class="card-title">Heart Shaker</h5>
+                <p class="card-text">Heals Diva Dragon's burn wounds and bites. Shake before use.</p>
+                <p class="card-text">$50 per drop bottle.</p>
+                <a onclick = "add(1)" class="btn btn-purple w-100">Add to Cart</a>
+              </div>
+            </div>
+          </div>
+  
+          <div class="col-md-4 mb-4">
+            <div class="card">
+              <img src="media/heal3.png" class="card-img-top" alt="elixer">
+              <div class="card-body">
+                <h5 class="card-title">Jisoo's Flower</h5>
+                <p class="card-text">Heals curses, poisons, and black magic. Mix with boiled water.</p>
+                <p class="card-text">$85 per bottle.</p>
+                <a onclick = "add(2)" class="btn btn-purple w-100">Add to Cart</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-4 mb-4">
+            <div class="card">
+              <img src="media/heal4.png" class="card-img-top" alt="elixer">
+              <div class="card-body">
+                <h5 class="card-title">Ethanol Free</h5>
+                <p class="card-text">Alcohol free wheat powder to mix into healing potions. Various benefits may be received depending on other ingredients.</p>
+                <p class="card-text">$15 per 2 kg.</p>
+                <a onclick = "add(3)" class="btn btn-purple w-100">Add to Cart</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-4 mb-4">
+            <div class="card">
+              <img src="media/heal5.png" class="card-img-top" alt="elixer">
+              <div class="card-body">
+                <h5 class="card-title">Moonlight Sunrise</h5>
+                <p class="card-text">Heals light poisoning for vampires and night shift witches. Do NOT mix with Ethanol Free Wheat Powder. Available until December 46 only.</p>
+                <p class="card-text">$76 per bottle.</p>
+                <a onclick = "add(4)" class="btn btn-purple w-100">Add to Cart</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-4 mb-4">
+            <div class="card">
+              <img src="media/heal6.png" class="card-img-top" alt="elixer">
+              <div class="card-body">
+                <h5 class="card-title">Jennie Ruby Juice</h5>
+                <p class="card-text">Duplicates alive blood cells to maintain homeostasis. CAN be mixed with Ethanol Free Wheat Powder. Pre-heat to melt crystals. </p>
+                <p class="card-text">$72 per bottle.</p>
+                <a onclick = "add(5)" class="btn btn-purple w-100">Add to Cart</a>
+              </div>
+            </div>
+          </div>
+
+        </div>
+  
+        
+        <h2>Poisons</h2>
+        <div class="row">
+
+          <div class="col-md-4 mb-4">
+            <div class="card">
+              <img src="media/poison1.png" class="card-img-top" alt="poison">
+              <div class="card-body">
+                <h5 class="card-title">Pakistani Grape Elixer</h5>
+                <p class="card-text">A rare elixir with numbing effects derived from enchanted grapes. Traditionally used in defensive enchantments and advanced potion-making rituals only.</p>
+                <p class="card-text">$387 per vial.</p>
+                <a onclick = "add(6)" class="btn btn-purple w-100">Add to Cart</a>
+              </div>
+            </div>
+          </div>
+  
+          <div class="col-md-4 mb-4">
+            <div class="card">
+              <img src="media/poison3.png" class="card-img-top" alt="poison">
+              <div class="card-body">
+                <h5 class="card-title">Pooja Crystal Behavior</h5>
+                <p class="card-text">A mystic formula rumored to cloud concentration temporarily. Often reserved for magical testing environments and mental resistance training spells.</p>
+                <p class="card-text">$102 per vial.</p>
+                <a onclick = "add(7)" class="btn btn-purple w-100">Add to Cart</a>
+              </div>
+            </div>
+          </div>
+          
+          <div class="col-md-4 mb-4">
+            <div class="card">
+              <img src="media/poison2.png" class="card-img-top" alt="poison">
+              <div class="card-body">
+                <h5 class="card-title">Beta AI: Ultimate Potion</h5>
+                <p class="card-text">This engineered potion includes rare elements and is used in sanctioned magical trials. Only trained alchemists should prepare or handle this mixture.</p>
+                <p class="card-text">$999 per vial.</p>
+                <a onclick = "add(8)" class="btn btn-purple w-100">Add to Cart</a>
+              </div>
+            </div>
+          </div>
+          
+          <div class="col-md-4 mb-4">
+            <div class="card">
+              <img src="media/poison4.png" class="card-img-top" alt="poison">
+              <div class="card-body">
+                <h5 class="card-title">Orange Magic Wand</h5>
+                <p class="card-text">Crafted to resemble an ordinary wand, this item subtly glows when activated. Known to be favored by skilled mages during advanced illusion training.</p>
+                <p class="card-text">$578 per vial.</p>
+                <a onclick = "add(9)" class="btn btn-purple w-100">Add to Cart</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-4 mb-4">
+            <div class="card">
+              <img src="media/poison5.png" class="card-img-top" alt="poison">
+              <div class="card-body">
+                <h5 class="card-title">Ballerina Cappuchina</h5>
+                <p class="card-text">With carefully balanced herbs, this potion is admired for calming effects during magical duels. Often used in academies for regulated spell practice.</p>
+                <p class="card-text">$439 per vial.</p>
+                <a onclick = "add(10)" class="btn btn-purple w-100">Add to Cart</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-4 mb-4">
+            <div class="card">
+              <img src="media/poison6.png" class="card-img-top" alt="poison">
+              <div class="card-body">
+                <h5 class="card-title">Baby Gronk Crystals</h5>
+                <p class="card-text">Iridescent crystals used in slow-brew potions requiring care and precision. Often handled during defensive spellcraft and advanced elemental research.</p>
+                <p class="card-text">$200 per vial.</p>
+                <a onclick = "add(11)" class="btn btn-purple w-100">Add to Cart</a>
+              </div>
+            </div>
+          </div>
+  
+        </div>
+
+        <h2>Black Magic (Limited Edition)</h2>
+        <div class="row">
+          <div class="col-md-4 mb-4">
+            <div class="card">
+              <img src="media/magic1.png" class="card-img-top" alt="poison">
+              <div class="card-body">
+                <h5 class="card-title">Jacob's Stick</h5>
+                <p class="card-text">Crafted from the elder wand of Jacob the Silent, this stick-shaped vial emits frost. Carried by dueling champions for balance, clarity, and stamina under pressure.</p>
+                <p class="card-text">$2038 per vial.</p>
+                <a onclick = "add(12)" class="btn btn-purple w-100">Add to Cart</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-4 mb-4">
+            <div class="card">
+              <img src="media/magic2.png" class="card-img-top" alt="poison">
+              <div class="card-body">
+                <h5 class="card-title">Zaina's Eyes</h5>
+                <p class="card-text">Two drops from this mirrored vial cloud the vision, then clear it. Taken before truth-binding or mind-reading sessions where illusions can threaten accuracy and focus.</p>
+                <p class="card-text">$8888 per vial.</p>
+                <a onclick = "add(13)" class="btn btn-purple w-100">Add to Cart</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-4 mb-4">
+            <div class="card">
+              <img src="media/magic3.png" class="card-img-top" alt="poison">
+              <div class="card-body">
+                <h5 class="card-title">Paulo's Bottle</h5>
+                <p class="card-text">A squat bottle with a cork made of bark. Said to hold Paulo’s final breath, it helps the drinker endure tight spaces or long silences during stealth or patience trials.</p>
+                <p class="card-text">$9283 per vial.</p>
+                <a onclick = "add(14)" class="btn btn-purple w-100">Add to Cart</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-4 mb-4">
+            <div class="card">
+              <img src="media/magic4.png" class="card-img-top" alt="poison">
+              <div class="card-body">
+                <h5 class="card-title">Sophia's Lips</h5>
+                <p class="card-text">Red as a sealed letter, this potion is dabbed onto the lips. Used before negotiations, secret vows, or love enchantments requiring truth or controlled seduction.</p>
+                <p class="card-text">$3285 per vial.</p>
+                <a onclick = "add(15)" class="btn btn-purple w-100">Add to Cart</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-4 mb-4">
+            <div class="card">
+              <img src="media/magic5.png" class="card-img-top" alt="poison">
+              <div class="card-body">
+                <h5 class="card-title">Bogart's Paws</h5>
+                <p class="card-text">Hair-thin wisps drift within this paw-shaped vial. Used to mimic feline grace or track through moonlit fog, it aids potioners in quiet entry or night vision trials.</p>
+                <p class="card-text">$1837 per vial.</p>
+                <a onclick = "add(16)" class="btn btn-purple w-100">Add to Cart</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-4 mb-4">
+            <div class="card">
+              <img src="media/magic6.png" class="card-img-top" alt="poison">
+              <div class="card-body">
+                <h5 class="card-title">Toby's Ball</h5>
+                <p class="card-text">Round and humming faintly, this orb stores echoes of Toby’s laughter. Used for mischief spells, memory unlocking, or joy-balancing during stress endurance tests.</p>
+                <p class="card-text">$1273 per vial.</p>
+                <a onclick = "add(17)" class="btn btn-purple w-100">Add to Cart</a>
+              </div>
+            </div>
+          </div>
+  
+        </div>
+
+        <h2>SuperHero Essentials</h2>
+        <div class="row">
+          <div class="col-md-4 mb-4">
+            <div class="card">
+              <img src="media/hero1.png" class="card-img-top" alt="poison">
+              <div class="card-body">
+                <h5 class="card-title">Angel's Wings</h5>
+                <p class="card-text">Golden wings woven from fallen starlight. Tied to armor or worn as a charm, it deflects betrayal, enhances resolve, and glows when courage is fading fast.</p>
+                <p class="card-text">$19383 per vial.</p>
+                <a onclick = "add(18)" class="btn btn-purple w-100">Add to Cart</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-4 mb-4">
+            <div class="card">
+              <img src="media/hero2.png" class="card-img-top" alt="poison">
+              <div class="card-body">
+                <h5 class="card-title">Dipper's Book</h5>
+                <p class="card-text">Kept in tiny pouches and flung mid-battle, this dust grants momentary fearlessness. Heroes often crush it in hand before speeches or final, fated duels at dawn.</p>
+                <p class="card-text">$27373 per vial.</p>
+                <a onclick = "add(19)" class="btn btn-purple w-100">Add to Cart</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-4 mb-4">
+            <div class="card">
+              <img src="media/hero3.png" class="card-img-top" alt="poison">
+              <div class="card-body">
+                <h5 class="card-title">Mama's Ember</h5>
+                <p class="card-text">This coal fragment never cools. Held near the heart, it strengthens will, stokes righteous fury, and shields the bearer from despair during the longest battles.</p>
+                <p class="card-text">$72849 per vial.</p>
+                <a onclick = "add(20)" class="btn btn-purple w-100">Add to Cart</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-4 mb-4">
+            <div class="card">
+              <img src="media/hero4.png" class="card-img-top" alt="poison">
+              <div class="card-body">
+                <h5 class="card-title">Solace Stone</h5>
+                <p class="card-text">Warm to the touch, this smooth stone hums with healing tones. It slows bleeding, calms anger, and revives strength after long travel, grief, or inner battle scars.</p>
+                <p class="card-text">$72393 per vial.</p>
+                <a onclick = "add(21)" class="btn btn-purple w-100">Add to Cart</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-4 mb-4">
+            <div class="card">
+              <img src="media/hero5.png" class="card-img-top" alt="poison">
+              <div class="card-body">
+                <h5 class="card-title">Witch Cards (?)</h5>
+                <p class="card-text">A deck of enchanted cards etched in silver blood. Each draw reveals a beast’s weakness, a hidden doorway, or a fate too grim to speak aloud without consequence.</p>
+                <p class="card-text">$91274 per vial.</p>
+                <a onclick = "add(22)" class="btn btn-purple w-100">Add to Cart</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-4 mb-4">
+            <div class="card">
+              <img src="media/hero6.png" class="card-img-top" alt="poison">
+              <div class="card-body">
+                <h5 class="card-title">Starlight Glimmer</h5>
+                <p class="card-text">An orb filled with liquid dawn, it chases illusions and reveals truth. Often used when crossing borders, unmasking glamours, or exposing traitors in disguise.</p>
+                <p class="card-text">$17536 per vial.</p>
+                <a onclick = "add(23)" class="btn btn-purple w-100">Add to Cart</a>
+              </div>
+            </div>
+          </div>
+  
+        </div>
+      </div>
+    </div>
+  </div>
+  
+    <script>
+      // On_the_Ground = 10;
+      // Heart_Shaker = 50;
+      // Jisoo_Flower = 85;
+      // Ethanol_Free = 15;
+      // Moonlight_Sunrise = 76;
+      // Jennie_Ruby_Juice = 72;
+      // Pakistani_Grape_Elixer = 387;
+      // Pooja_Crystal_Behavior = 102;
+      // Beta_AI = 999;
+      // Orange_Magic_Wand = 578;
+      // Ballerina_Cappuchina = 439;
+      // Baby_Gronk_Crystals = 200;
+      // Jacob_Stick = 2038;
+      // Zaina_Eyes = 8888;
+      // Paulo_Bottle = 9283;
+      // Sophia_Lips = 3285;
+      // Bogart_Paws = 1837;
+      // Toby_Ball = 1273;
+      // Angels_Wings = 19383;
+      // Dipper_Book = 27373;
+      // Mama_Ember = 72849;
+      // Solace_Stone = 72393;
+      // Witch_Cards = 91274;
+      // Starlight_Glimmer = 17536;
+
+      var productp = {};
+      productp[0] = 10;
+      productp[1] = 50;
+      productp[2] = 85;
+      productp[3] = 15;
+      productp[4] = 76;
+      productp[5] = 72;
+      productp[6] = 387;
+      productp[7] = 102;
+      productp[8] = 999;
+      productp[9] = 578;
+      productp[10] = 439;
+      productp[11] = 200;
+      productp[12] = 2038;
+      productp[13] = 8888;
+      productp[14] = 9283;
+      productp[15] = 3285;
+      productp[16] = 1837;
+      productp[17] = 1273;
+      productp[18] = 19383;
+      productp[19] = 27373;
+      productp[20] = 72849;
+      productp[21] = 72393;
+      productp[22] = 91274;
+      productp[23] = 17536;
+
+      var productn = {};
+      productn[0] = "On the Ground";
+      productn[1] = "Heart Shaker";
+      productn[2] = "Jisoos Flower";
+      productn[3] = "Ethanol Free";
+      productn[4] = "Moonlight Sunrise";
+      productn[5] = "Jennie Ruby Juice";
+      productn[6] = "Pakistani Grape Elixer";
+      productn[7] = "Pooja Crystal Behavior";
+      productn[8] = "Beta AI: Ultimate Potion";
+      productn[9] = "Orange Magic Wand";
+      productn[10] = "Ballerina Cappuchina";
+      productn[11] = "Baby Gronk Crystals";
+      productn[12] = "Jacobs Stick";
+      productn[13] = "Zainas Eyes";
+      productn[14] = "Paulos Bottle";
+      productn[15] = "Sophias Lips";
+      productn[16] = "Bogarts Paws";
+      productn[17] = "Tobys Ball";
+      productn[18] = "Angels Wings";
+      productn[19] = "Dippers Book";
+      productn[20] = "Mamas Ember";
+      productn[21] = "Solace Stone";
+      productn[22] = "Witch Cards";
+      productn[23] = "Starlight Glimmer";
+      
+      var totalt = 0;
+      var cust_order = [{}];
+      const truecost = new Array(24);
+      truecost.fill(0);
+      const number = new Array(24);
+      number.fill(0);
+
+      function set_order(){
+          var co;
+          var truet = {};
+          var prod_namee = new Array(24);
+          var out = new Array(24);
+          out.fill(true);
+
+          var d = 0;
+
+          for (i = 0; i< 24; i++){
+            if (number[i] == 0){
+              out[i] = false;
+            }
+          }
+          for (i = 0; i < 24; i++){
+            if (out[i]){
+              truet[i] = number[i]*productp[i];
+              prod_namee[i] = String(number[i]) + "x: " + productn[i];
+              cust_order[i-d] = {prod_name:prod_namee[i], prod_price:truet[i]};
+            } else {
+              d++;
+            }
+          }
+          co = JSON.stringify(cust_order);
+          document.getElementById("cust_order").value = co;
+      }
+
+      function add(a){
+        const newdiv = document.createElement("div");
+        newdiv.id = a;
+        newdiv.className = "reciept_card";
+                      if (number[a] == 0){
+                        number[a]++;
+                        
+                        const neworder = document.createElement("h1");
+                        neworder.innerHTML = productn[a] + ": " + (number[a]*productp[a]) + "$";
+                        neworder.id = "n" + a;
+                        newdiv.appendChild(neworder);
+                        
+                        
+                        const newremove = document.createElement("h1");
+                        newremove.innerHTML = "🗑️";
+                        newremove.id = "r" + a;
+                        newdiv.appendChild(newremove);
+
+                        const addd = document.createElement("p1");
+                        addd.innerHTML = "➕";
+                        addd.id = "r" + a;
+                        addd.style.fontSize = "20px";
+                        newdiv.appendChild(addd);
+
+                        const minus = document.createElement("p1");
+                        minus.innerHTML = "➖";
+                        minus.id = "r" + a;
+                        minus.style.fontSize = "20px";
+                        newdiv.appendChild(minus);
+
+
+                        document.getElementById("b").appendChild(newdiv);
+                        newremove.setAttribute("onclick",`close1(${a})`);
+                        addd.setAttribute("onclick",`add(${a})`);
+                        minus.setAttribute("onclick",`minus1(${a})`);
+                      } else {
+                        number[a]++;
+                        document.getElementById("n"+a).innerHTML = number[a] + "x " + productn[a] + ": " + (number[a]*productp[a]) + "$";
+                      }
+                      totalt += productp[a];
+                      document.getElementById("Total").innerHTML = totalt;
+      }
+      function close1(b) {
+        document.getElementById(b).remove();
+        totalt -= number[b]*productp[b];
+        number[b] = 0;
+        document.getElementById("Total").innerHTML = totalt;
+      }
+
+      function minus1(b){
+        if (number[b] > 1){
+          totalt -= productp[b];
+          number[b]--;
+          document.getElementById("Total").innerHTML = totalt;
+          if (number[b] > 1){
+            document.getElementById("n"+b).innerHTML = number[b] + "x " + productn[b] + ": " + (number[b]*productp[b]) + "$";
+          } else {
+            document.getElementById("n"+b).innerHTML = productn[b] + ": " + (number[b]*productp[b]) + "$";
+          }
+        } else {
+          close1(b);
+        }
+      }
+    </script>
+</body>
+</html>
